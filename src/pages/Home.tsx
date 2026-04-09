@@ -1,14 +1,43 @@
 import { FormEvent, useState } from 'react';
+import { supabase } from '../lib/supabase';
+import { Loader2, CheckCircle2 } from 'lucide-react';
 
 export default function Home() {
   const [nombreApellido, setNombreApellido] = useState('');
   const [instagram, setInstagram] = useState('');
   const [celular, setCelular] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // Plantilla base: este submit queda listo para conectar a API cuando quieras.
-    console.log({ nombreApellido, instagram, celular });
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const { error: insertError } = await supabase
+        .from('disculpas')
+        .insert([
+          {
+            nombre_apellido: nombreApellido,
+            instagram: instagram,
+            celular: celular,
+          },
+        ]);
+
+      if (insertError) throw insertError;
+
+      setIsSuccess(true);
+      setNombreApellido('');
+      setInstagram('');
+      setCelular('');
+    } catch (err: any) {
+      console.error('Error saving to Supabase:', err);
+      setError('Hubo un error al enviar tus datos. Por favor, intenta de nuevo.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -64,11 +93,32 @@ export default function Home() {
             />
           </div>
 
+          {isSuccess && (
+            <div className="mb-6 p-4 rounded-2xl bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 flex items-center gap-3 animate-in fade-in slide-in-from-top-4 duration-500">
+              <CheckCircle2 className="h-5 w-5" />
+              <p className="font-bold uppercase tracking-wider text-sm">¡Datos enviados con éxito!</p>
+            </div>
+          )}
+
+          {error && (
+            <div className="mb-6 p-4 rounded-2xl bg-red-500/20 border border-red-500/30 text-red-400 flex items-center gap-3 animate-in fade-in slide-in-from-top-4">
+              <p className="font-bold uppercase tracking-wider text-sm">{error}</p>
+            </div>
+          )}
+
           <button
             type="submit"
-            className="w-full rounded-2xl bg-migusto-rojo px-6 py-3 font-black uppercase tracking-wider text-white transition-opacity hover:opacity-90"
+            disabled={isLoading}
+            className="w-full rounded-2xl bg-migusto-rojo px-6 py-4 font-black uppercase tracking-wider text-white transition-all hover:opacity-90 disabled:opacity-50 flex items-center justify-center gap-2 shadow-lg shadow-migusto-rojo/20"
           >
-            Enviar
+            {isLoading ? (
+              <>
+                <Loader2 className="h-5 w-5 animate-spin" />
+                <span>Enviando...</span>
+              </>
+            ) : (
+              <span>Enviar</span>
+            )}
           </button>
         </form>
       </div>

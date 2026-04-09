@@ -9,23 +9,10 @@ if (!supabaseUrl || !supabaseAnonKey) {
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-export type Ticket = {
-  id_ticket: string;
-  tipo: 'BRONCE' | 'PLATA' | 'ORO';
-  meses: number;
-  usado: boolean;
-  dni_validado: string | null;
-  fecha_validacion: string | null;
-  created_at: string;
-};
-
-export type Registro = {
+export type Disculpa = {
   id: string;
-  nombre: string;
-  apellido: string;
-  dni: string;
-  telefono: string;
-  id_ticket: string;
-  fecha_registro: string;
-  activo: boolean;
+  nombre_apellido: string;
+  instagram: string;
+  celular: string;
+  created_at: string;
 };
