@@ -17,7 +17,7 @@ function AnimatedRoutes() {
 
 function App() {
   return (
-    <BrowserRouter basename="/tickets">
+    <BrowserRouter basename="/disculpas">
       <Layout>
         <AnimatedRoutes />
       </Layout>

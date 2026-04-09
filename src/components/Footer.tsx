@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Instagram } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -27,14 +26,7 @@ export default function Footer() {
               alt="Mi Gusto"
               className="h-8 md:h-10 w-auto object-contain brightness-200 contrast-125 grayscale opacity-40 group-hover:opacity-100 transition-opacity"
             />
-            <div className="flex flex-col">
-              <p className="text-[10px] md:text-xs uppercase tracking-[0.1em] text-migusto-crema/40 font-black">
-                Golden Tickets Mi Gusto Lovers · 2026
-              </p>
-              <p className="text-[8px] text-migusto-crema/20 uppercase tracking-[0.2em]">
-                La calidad no se negocia
-              </p>
-            </div>
+
 
             {/* Social Icons Mobile Expandable */}
             <div className="md:hidden flex items-center ml-2 border-l border-white/10 pl-4 relative">
@@ -91,7 +83,7 @@ export default function Footer() {
           {/* Centrado en el medio de la pantalla */}
           <div className="text-center mb-0 md:mb-0">
             <p className="text-white/40 text-[10px] md:text-xs font-medium tracking-tight">
-              © Desarrollado por el <span className="text-white/60 font-bold border-b border-white/20 pb-0.5">Departamento de Sistemas</span> de Mi Gusto | Todos los derechos reservados.
+              © {new Date().getFullYear()} Mi Gusto | Todos los derechos reservados.
             </p>
           </div>
 
