@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply antialiased text-migusto-crema bg-migusto-tierra-oscuro font-sans;
+  }
+
+  #root {
+    @apply relative flex flex-col min-h-screen;
+  }
+
+  ::selection {
+    @apply bg-migusto-rojo text-white;
+  }
+
+  /* Ocultar barra de desplazamiento en Chrome, Safari y Opera */
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Ocultar barra de desplazamiento en Firefox e IE/Edge */
+  * {
+    -ms-overflow-style: none; /* IE y Edge */
+    scrollbar-width: none;    /* Firefox */
+  }
+}
+
+@layer components {
+  .premium-gradient {
+    @apply bg-gradient-to-br from-migusto-tierra via-migusto-tierra-oscuro to-migusto-tierra;
+  }
+
+  .glass-card {
+    @apply bg-white/5 backdrop-blur-md border border-white/10 shadow-premium;
+  }
+
+  .text-gold-gradient {
+    @apply bg-gradient-to-r from-migusto-dorado via-migusto-dorado-bright to-migusto-dorado bg-clip-text text-transparent;
+  }
+}
+
+@keyframes twinkle-hyper {
+
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(0.6);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.5);
+  }
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-200%) translateY(-200%) rotate(45deg);
+  }
+
+  100% {
+    transform: translateX(200%) translateY(200%) rotate(45deg);
+  }
+}
+
+@keyframes rotate-slow {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse-soft {
+
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+}
+
+.animate-twinkle-hyper {
+  animation: twinkle-hyper var(--twinkle-duration, 2.5s) ease-in-out infinite;
+}
+
+.animate-shine {
+  animation: shine 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.animate-rotate-slow {
+  animation: rotate-slow 20s linear infinite;
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 3s ease-in-out infinite;
+}
+
+.glass-morphism {
+  @apply backdrop-blur-xl border border-white/20 bg-white/5;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1), 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+}
+
+.premium-border {
+  position: relative;
+}
+
+.premium-border::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, transparent 50%, rgba(255, 255, 255, 0.2) 100%);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: destination-out;
+  pointer-events: none;
+}
