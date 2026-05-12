@@ -17,7 +17,7 @@ function AnimatedRoutes() {
 
 function App() {
   return (
-    <BrowserRouter basename="/disculpas">
+    <BrowserRouter basename="/migusto-day">
       <Layout>
         <AnimatedRoutes />
       </Layout>

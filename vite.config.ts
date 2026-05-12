@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/disculpas/',
+  base: '/migusto-day/',
   plugins: [
     react(),
     {
@@ -11,9 +11,9 @@ export default defineConfig({
       enforce: 'pre',
       configureServer(server) {
         server.middlewares.use((req, res, next) => {
-          if (req.url === '/disculpas' || req.originalUrl === '/disculpas') {
+          if (req.url === '/migusto-day' || req.originalUrl === '/migusto-day') {
             res.statusCode = 301;
-            res.setHeader('Location', '/disculpas/');
+            res.setHeader('Location', '/migusto-day/');
             res.end();
             return;
           }

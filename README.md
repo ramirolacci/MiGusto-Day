@@ -1,68 +1,70 @@
-# Golden Tickets · Mi Gusto Lovers
+# Mi Gusto Day - Canjeá tu 15% OFF
 
-Sistema web para gestionar la experiencia **Golden Tickets** de Mi Gusto.
-Validación de cupones físicos, registro de ganadores, control de beneficios mensuales y canjes en sucursal, todo integrado con **Supabase** como backend-as-a-service.
+Este es un sistema premium de registro diseñado para la campaña **Mi Gusto Day**, donde los usuarios pueden registrarse para obtener un beneficio exclusivo del 15% OFF. La aplicación ofrece una interfaz elegante, rápida y con validaciones en tiempo real para asegurar una experiencia de usuario de primer nivel.
 
-Mi Gusto Golden Tickets es una campaña de marketing en la que se dejan, de forma aleatoria en packs de 6 o 12 empanadas, tickets especiales con un ID único y un código QR que redirige a esta web. Cada ticket otorga como premio un pack de **12 empanadas gratis cada mes** durante:
-- **12 meses** para el **Ticket Gold**
-- **6 meses** para el **Ticket Silver**
-- **3 meses** para el **Ticket Bronze**
+## 🚀 Características Premium
 
-La aplicación está pensada para:
+- **Interfaz Moderna**: Diseño sofisticado con estética oscura, efectos de desenfoque (glassmorphism) y acentos dorados que refuerzan la identidad de marca.
+- **Animaciones Fluidas**: Integración de **Framer Motion** para transiciones suaves, efectos de entrada cinematográficos y modales interactivos.
+- **Validación Inteligente**: Sistema que evita registros duplicados verificando Nombre, Instagram y Celular en la base de datos antes de procesar el envío.
+- **Mobile First**: Optimización total para dispositivos móviles, garantizando una carga rápida y facilidad de uso en pantallas pequeñas.
+- **Feedback Inmediato**: Modales de éxito y error con iconografía de alta calidad y efectos visuales dinámicos.
 
-- **Clientes**: validar su ticket y registrarse para obtener su beneficio.
-- **Sucursal / Staff**: validar tickets en el local, registrar titulares y controlar canjes mensuales por DNI.
+## 🛠️ Tech Stack
+
+- **Frontend**: React + TypeScript
+- **Styling**: Tailwind CSS
+- **Animaciones**: Framer Motion
+- **Base de Datos**: Supabase (PostgreSQL)
+- **Iconografía**: Lucide React
+- **Formularios**: React Hook Form
+- **Build Tool**: Vite
+
+## 📦 Instalación y Configuración
+
+1. **Clonar el repositorio:**
+   ```bash
+   git clone [URL-DEL-REPO]
+   cd MiGusto-Day
+   ```
+
+2. **Instalar dependencias:**
+   ```bash
+   npm install
+   ```
+
+3. **Variables de Entorno:**
+   Crea un archivo `.env` en la raíz con tus credenciales de Supabase:
+   ```env
+   VITE_SUPABASE_URL=tu_url_de_supabase
+   VITE_SUPABASE_ANON_KEY=tu_clave_anon_de_supabase
+   ```
+
+4. **Configuración de Base de Datos:**
+   Ejecuta el siguiente SQL en el editor de Supabase para crear la tabla necesaria:
+   ```sql
+   CREATE TABLE disculpas (
+     id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+     nombre_apellido text NOT NULL,
+     instagram text NOT NULL,
+     celular text NOT NULL,
+     created_at timestamptz DEFAULT now()
+   );
+
+   -- Habilitar RLS
+   ALTER TABLE disculpas ENABLE ROW LEVEL SECURITY;
+
+   -- Política para inserciones públicas
+   CREATE POLICY "Allow public inserts" ON disculpas FOR INSERT TO anon WITH CHECK (true);
+   
+   -- Política para lectura pública (validación de duplicados)
+   CREATE POLICY "Allow public read" ON disculpas FOR SELECT TO anon USING (true);
+   ```
+
+## 👥 Desarrolladores
+
+- **Facundo Carrizo** — GitHub: [@facu14carrizo](https://github.com/facu14carrizo) · LinkedIn: [facu14carrizo](https://www.linkedin.com/in/facu14carrizo)
+- **Ramiro Lacci** — GitHub: [@ramirolacci19](https://github.com/ramirolacci19) · LinkedIn: [ramiro-lacci](https://www.linkedin.com/in/ramiro-lacci)
 
 ---
-
-## Configuración local
-
-Para ejecutar el proyecto en local necesitás variables de entorno de Supabase.
-
-1. Copiá el archivo de ejemplo:
-   - `cp .env.example .env.local` (Git Bash)
-   - `copy .env.example .env.local` (PowerShell / CMD)
-2. Abrí `.env.local` y completá:
-   - `VITE_SUPABASE_URL`
-   - `VITE_SUPABASE_ANON_KEY`
-3. Reiniciá el servidor de desarrollo (`npm run dev`).
-
-Si faltan esas variables, la app mostrará pantalla en blanco y en consola aparecerá `Missing Supabase environment variables`.
-
----
-
-## Paginas
-- **`/` – Landing base y canje de cupón**
-  - Selección de nivel de premio: **Oro**, **Plata**, **Bronce**.
-  - Validación de ticket por ID (formato `MGXXXXXXXX`) contra Supabase (`tickets`).
-  - Verificación de:
-    - Existencia del ticket.
-    - Que no esté usado.
-    - Que el tipo coincida con el nivel seleccionado.
-  - Registro del ganador (nombre, email, teléfono, DNI) en Supabase (`registros`) y marcado del ticket como usado.
-  - Secciones informativas: pasos de la experiencia, FAQs, términos y condiciones, ubicación de la sucursal.
-
-![Demo landing y canje](public/MGticketsDemo.gif)
-
-
-- **`/validacion` – Validación de beneficio por DNI**
-  - Pensado para uso en la sucursal.
-  - Se ingresa solo el **DNI**:
-    - Busca un registro activo en `registros`.
-    - Obtiene el ticket asociado (`tickets`) y calcula fecha de vencimiento según meses de vigencia.
-    - Consulta `canjes` para verificar si ya se canjeó un beneficio en el mes actual.
-  - Muestra:
-    - Tipo de ticket (Bronce / Plata / Oro).
-    - Meses de vigencia y fecha de registro.
-    - Estado: **vigente / vencido**, **con o sin canje este mes**.
-  - Permite **registrar un canje** (inserta un registro en `canjes`).
-
-![Demo validador por DNI](public/ValidacionDemo.png)
----
-
-
-## Licencia
-
-Todo el proyecto se encuentra bajo los derechos de **Mi Gusto** © 2026.
-Queda prohibida su reproducción total o parcial sin autorización expresa de la empresa.
-
+Desarrollado con ❤️ para Mi Gusto.
